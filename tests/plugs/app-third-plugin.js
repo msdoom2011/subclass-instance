@@ -1,6 +1,12 @@
 var appThirdPlugin = Subclass.createModule('appThirdPlugin', {
     plugin: true,
-    parameters: {
-        bar: 20
+    onInstance: function(evt, moduleInstance, arg) {
+        if (!moduleInstance.calls) {
+            moduleInstance.calls = [];
+        }
+        moduleInstance.calls.push("appThirdPlugin1");
     }
+});
+appThirdPlugin.onInstance(function(evt, moduleInstance, arg) {
+    moduleInstance.calls.push("appThirdPlugin2");
 });

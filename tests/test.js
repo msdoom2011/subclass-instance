@@ -2,33 +2,28 @@
 describe("Checking SubclassJS initialization", function() {
 
     it ("", function() {
-        expect(Subclass.issetPlugin('SubclassParameter')).toBe(true);
+        expect(Subclass.issetPlugin('SubclassInstance')).toBe(true);
     });
 });
 
-describe("Checking parameters", function() {
+describe("Creating module instance", function() {
+    it ("", function() {
 
-    it ("existence", function() {
-        expect(app.issetParameter('mode')).toBe(true);
-        expect(app.issetParameter('foo')).toBe(true);
-        expect(app.issetParameter('bar')).toBe(true);
-        expect(app.issetParameter('param1')).toBe(true);
-        expect(app.issetParameter('param2')).toBe(true);
-        expect(app.issetParameter('param3')).toBe(true);
-        expect(app.issetParameter('forth')).toBe(true);
-    });
+        var inst = app.createInstance('test');
 
-    it ("values", function() {
-        expect(app.getParameter('mode')).toBe('prod');
-        expect(app.getParameter('foo')).toBe(false);
-        expect(app.getParameter('bar')).toBe(30);
-        expect(app.getParameter('param1')).toBe(10);
-        expect(app.getParameter('param2')).toBe(20);
-        expect(app.getParameter('param3')).toBe(35);
-        expect(app.getParameter('forth')).toBe(true);
-    });
+        expect(inst instanceof Subclass.ModuleInstance).toBe(true);
 
-    it ("not allowed actions", function() {
-        expect(function() { app.setParameter('failParam', 20) }).toThrow();
+        expect(inst.appArg).toBe('test');
+        expect(inst.calls[0]).toBe('app1');
+        expect(inst.calls[1]).toBe('app2');
+        expect(inst.calls[2]).toBe('appFirstPlugin1');
+        expect(inst.calls[3]).toBe('appFirstPlugin2');
+        expect(inst.calls[4]).toBe('appSecondPlugin1');
+        expect(inst.calls[5]).toBe('appSecondPlugin2');
+        expect(inst.calls[6]).toBe('appThirdPlugin1');
+        expect(inst.calls[7]).toBe('appThirdPlugin2');
+        expect(inst.calls[8]).toBe('appForthPlugin1');
+        expect(inst.calls[9]).toBe('appForthPlugin2');
+
     });
 });

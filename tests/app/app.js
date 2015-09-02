@@ -1,15 +1,13 @@
 var app = Subclass.createModule("app", ['appFirstPlugin'], {
-    parameters: {
-        mode: "dev",
-        foo: true,
-        bar: 10
+    onInstance: function(evt, moduleInstance, arg) {
+        if (!moduleInstance.calls) {
+            moduleInstance.calls = [];
+        }
+        moduleInstance.appArg = arg;
+        moduleInstance.calls.push(this.getName() + "1");
     }
 });
 
-app.registerParameters({
-    param1: 10,
-    param2: 20
+app.onInstance(function(evt, moduleInstance, arg) {
+    moduleInstance.calls.push(this.getName() + "2");
 });
-
-app.registerParameter('param3', 30);
-app.setParameter('param3', 35);

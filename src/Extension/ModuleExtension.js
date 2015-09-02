@@ -75,7 +75,8 @@ Subclass.Instance.Extension.ModuleExtension = function() {
                 .apply()
             ;
         }
-        this.getEventManager().getEvent('onInstance').trigger(moduleInstance);
+        var onInstanceEvent = this.getEventManager().getEvent('onInstance');
+        onInstanceEvent.trigger.apply(onInstanceEvent, arguments);
 
         return this;
     };
@@ -87,12 +88,19 @@ Subclass.Instance.Extension.ModuleExtension = function() {
      */
     Module.prototype.createInstance = function()
     {
+        if (!this.isRoot() || !this.isReady()) {
+            Subclass.Error.create(
+                'Can\'t create instance of module ' +
+                'which is a plugin or not ready.'
+            );
+        }
         var moduleInstance = Subclass.Tools.createClassInstance(Subclass.ModuleInstance, this);
         var args = [moduleInstance];
 
         for (var i = 0; i < arguments.length; i++) {
             args.push(arguments[i]);
         }
+
         this.triggerOnInstance.apply(this, args);
 
         return moduleInstance;

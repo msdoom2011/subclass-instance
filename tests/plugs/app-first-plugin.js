@@ -1,12 +1,12 @@
 var appFirstPlugin = Subclass.createModule('appFirstPlugin', {
     plugin: true,
-    parameters: {
-        mode_bad_name: "prod"
+    onInstance: function(evt, moduleInstance, arg) {
+        if (!moduleInstance.calls) {
+            moduleInstance.calls = [];
+        }
+        moduleInstance.calls.push("appFirstPlugin1");
     }
 });
-
-appFirstPlugin.onSetup(function() {
-    var parameterManager = this.getParameterManager();
-    parameterManager.renameParameter('mode_bad_name', 'mode');
+appFirstPlugin.onInstance(function(evt, moduleInstance, arg) {
+    moduleInstance.calls.push("appFirstPlugin2");
 });
-

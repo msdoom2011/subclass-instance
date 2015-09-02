@@ -4,6 +4,11 @@
 Subclass.Instance = {};
 
 /**
+ * @namespace
+ */
+Subclass.Instance.Extension = {};
+
+/**
  * @class
  * @constructor
  * @param {Subclass.Module} module
