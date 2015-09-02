@@ -29,6 +29,17 @@ Subclass.Instance.Extension.ModuleAPIExtension = function() {
         return this.getModule().onInstance.apply(this.getModule(), arguments);
     };
 
+    /**
+     * The same as the {@link Subclass.Module#createInstance}
+     *
+     * @method createInstance
+     * @memberOf Subclass.ModuleAPI.prototype
+     */
+    ModuleAPI.prototype.createInstance = function()
+    {
+        return this.getModule().createInstance.apply(this.getModule(), arguments);
+    };
+
 
     //=========================================================================
     //======================== REGISTERING EXTENSION ==========================
