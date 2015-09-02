@@ -4,29 +4,13 @@
  *
  * Module settings:
  *
- * parameters   {Object}    opt     Object with parameters which can
- *                                  be used by all over module.
- *
- *                                  It is useful for defining some
- *                                  setting parameters of
- *                                  application, i.e. debug mode.
- *
- *                                  Example:
- *
- *                                  var moduleSettings = {
- *                                    ...
- *                                    parameters: {
- *                                      mode: "dev",
- *                                      foo: 111,
- *                                      bar: true,
- *                                      ...
- *                                    },
- *                                    ...
- *                                  };
+ * onInstance   {function}   opt    Callback function which will be invoked
+ *                                  each time immediately after the module
+ *                                  instance was created.
  */
-Subclass.Parameter.Extension.ModuleExtension = function() {
+Subclass.Instance.Extension.ModuleExtension = function() {
 
-    function ModuleExtension(classInst)
+    function ModuleExtension(module)
     {
         ModuleExtension.$parent.apply(this, arguments);
     }
@@ -41,20 +25,7 @@ Subclass.Parameter.Extension.ModuleExtension = function() {
         this.$parent.initialize.apply(this, arguments);
 
         var eventManager = module.getEventManager();
-
-        eventManager.getEvent('onInitialize').addListener(function(evt, module)
-        {
-            /**
-             * Parameter manager instance
-             *
-             * @type {Subclass.Parameter.ParameterManager}
-             * @private
-             */
-            this._parameterManager = Subclass.Tools.createClassInstance(
-                Subclass.Parameter.ParameterManager,
-                this
-            );
-        });
+        eventManager.registerEvent('onInstance');
     };
 
 
@@ -65,17 +36,66 @@ Subclass.Parameter.Extension.ModuleExtension = function() {
     var Module = Subclass.Module;
 
     /**
-     * Returns an instance of parameter manager which allows to register parameters,
-     * set and get its values throughout the project
+     * The same as the {@link Subclass.SettingsManager#setOnInstance}
      *
-     * @method getParameterManager
+     * @method onInstance
      * @memberOf Subclass.Module.prototype
      *
-     * @returns {Subclass.Parameter.ParameterManager}
+     * @param {Function} callback
+     *      The callback function
+     *
+     * @returns {Subclass.Module}
      */
-    Module.prototype.getParameterManager = function()
+    Module.prototype.onInstance = function(callback)
     {
-        return this._parameterManager;
+        this.getSettingsManager().setOnInstance(callback);
+
+        return this;
+    };
+
+    /**
+     * Invokes registered onInstance callback functions.<br /><br />
+     *
+     * @method triggerOnInstance
+     * @memberOf Subclass.Module.prototype
+     *
+     * @returns {Subclass.Module}
+     */
+    Module.prototype.triggerOnInstance = function(moduleInstance)
+    {
+        if (
+            !moduleInstance
+            || typeof moduleInstance != 'object'
+            || !(moduleInstance instanceof Subclass.ModuleInstance)
+        ) {
+            Subclass.Error.create('InvalidArgument')
+                .argument('the instance of module', false)
+                .expected('an instance of class "Subclass.ModuleInstance"')
+                .received(moduleInstance)
+                .apply()
+            ;
+        }
+        this.getEventManager().getEvent('onInstance').trigger(moduleInstance);
+
+        return this;
+    };
+
+    /**
+     * Creates module instance and triggers onInstance event
+     *
+     * @returns {Subclass.ModuleInstance}
+     */
+    Module.prototype.createInstance = function()
+    {
+        var moduleInstance = Subclass.Tools.createClassInstance(Subclass.ModuleInstance, this);
+        var args = [moduleInstance];
+
+        for (var i = 0; i < arguments.length; i++) {
+            args.push(arguments[i]);
+        }
+        this.triggerOnInstance.apply(this, args);
+
+        return moduleInstance;
     };
 
 

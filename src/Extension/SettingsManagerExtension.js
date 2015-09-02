@@ -2,7 +2,7 @@
  * @class
  * @constructor
  */
-Subclass.Parameter.Extension.SettingsManagerExtension = function() {
+Subclass.Instance.Extension.SettingsManagerExtension = function() {
 
     function SettingsManagerExtension(classInst)
     {
@@ -18,84 +18,37 @@ Subclass.Parameter.Extension.SettingsManagerExtension = function() {
 
     var SettingsManager = Subclass.SettingsManager;
 
+
     /**
-     * Registers new parameters or redefines already existent with the same name.
+     * Sets callback function which will be invoked each time after
+     * the module instance was created
      *
-     * @method setParameters
+     * @method setOnInstance
      * @memberOf Subclass.SettingsManager.prototype
      *
      * @throws {Error}
-     *      Throws error if trying to change value after the module became ready
+     *      Throws error if:<br />
+     *      - trying to change value after the module became ready<br />
+     *      - specified not function argument value
      *
-     * @param {Object} parameters
-     *      A plain object with properties which hold
-     *      properties whatever you need
-     *
-     * @example
-     * ...
-     *
-     * var moduleSetting = moduleInst.getSettingsManager();
-     *
-     * // setting new parameters
-     * moduleSettings.setParameters({
-     *      param1: "string value",
-     *      param2: 1000,
-     *      param3: { a: 10, b: "str" },
-     *      ...
-     * });
-     * ...
-     *
-     * moduleInst.getParameter("param1"); // returns "string value"
-     * moduleInst.getParameter("param2"); // returns 1000
-     * moduleInst.getParameter("param3"); // returns { a: 10, b: "str" }
-     * ...
+     * @param callback
      */
-    SettingsManager.prototype.setParameters = function(parameters)
+    SettingsManager.prototype.setOnInstance = function(callback)
     {
         this.checkModuleIsReady();
 
-        if (!parameters || !Subclass.Tools.isPlainObject(parameters)) {
-            Subclass.Error.create('InvalidModuleOption')
-                .option('parameters')
-                .module(this.getModule().getName())
-                .received(parameters)
-                .expected('a plain object')
+        if (typeof callback != "function") {
+            Subclass.Error.create('InvalidArgument')
+                .argument('the onInstance event callback', false)
+                .received(callback)
+                .expected('a function')
                 .apply()
             ;
         }
-        var parameterManager = this.getModule().getParameterManager();
+        var eventManager = this.getModule().getEventManager();
+        var onInstanceEvent = eventManager.getEvent('onInstance');
 
-        for (var paramName in parameters) {
-            if (!parameters.hasOwnProperty(paramName)) {
-                continue;
-            }
-            parameterManager.registerParameter(
-                paramName,
-                parameters[paramName]
-            );
-        }
-    };
-
-    /**
-     * Returns all registered parameters in the form in which they were set
-     *
-     * @method getParameters
-     * @memberOf Subclass.SettingsManager.prototype
-     *
-     * @returns {Object}
-     */
-    SettingsManager.prototype.getParameters = function()
-    {
-        var parameters = this.getModule().getParameterManager().getParameters();
-        var parameterDefinitions = {};
-
-        for (var i = 0; i < parameters.length; i++) {
-            var parameterValue = parameters[i].getValue();
-            var parameterName = parameters[i].getName();
-
-            parameterDefinitions[parameterName] = Subclass.Tools.copy(parameterValue);
-        }
-        return parameterDefinitions;
+        onInstanceEvent.addListener(callback);
     };
 
 

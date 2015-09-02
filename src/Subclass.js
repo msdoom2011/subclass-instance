@@ -3,20 +3,20 @@
  */
 Subclass.registerPlugin(function() {
 
-    function ParameterPlugin()
+    function InstancePlugin()
     {
-        ParameterPlugin.$parent.call(this);
+        InstancePlugin.$parent.call(this);
     }
 
-    ParameterPlugin.$parent = Subclass.SubclassPlugin;
+    InstancePlugin.$parent = Subclass.SubclassPlugin;
 
     /**
      * @inheritDoc
      */
-    ParameterPlugin.getName = function()
+    InstancePlugin.getName = function()
     {
-        return "SubclassParameter";
+        return "SubclassInstance";
     };
 
-    return ParameterPlugin;
+    return InstancePlugin;
 }());

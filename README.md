@@ -1,1 +1,3 @@
-The plugin for SubclassJS framework which brings ability to define parameters that will be available all over your SubclassJS application.
+SubclassInstance
+
+The plugin for Subclass framework which allows to create module instances.

@@ -2,7 +2,7 @@
  * @class
  * @constructor
  */
-Subclass.Parameter.Extension.ModuleAPIExtension = function() {
+Subclass.Instance.Extension.ModuleAPIExtension = function() {
 
     function ModuleAPIExtension(classInst)
     {
@@ -19,84 +19,14 @@ Subclass.Parameter.Extension.ModuleAPIExtension = function() {
     var ModuleAPI = Subclass.ModuleAPI;
 
     /**
-     * The same as the {@link Subclass.Module#getParameterManager}
+     * The same as the {@link Subclass.Module#onInstance}
      *
-     * @method getParameterManager
+     * @method onInstance
      * @memberOf Subclass.ModuleAPI.prototype
      */
-    ModuleAPI.prototype.getParameterManager = function()
+    ModuleAPI.prototype.onInstance = function()
     {
-        return this.getModule().getParameterManager.apply(this.getModule(), arguments);
-    };
-
-    /**
-     * The same as the {@link Subclass.Parameter.ParameterManager#registerParameter}
-     *
-     * @method registerService
-     * @memberOf Subclass.ModuleAPI.prototype
-     */
-    ModuleAPI.prototype.registerParameter = function()
-    {
-        return this.getModule().getParameterManager().registerParameter.apply(
-            this.getModule().getParameterManager(),
-            arguments
-        );
-    };
-
-    /**
-     * The same as the {@link Subclass.SettingsManager#setParameters}
-     *
-     * @method registerParameters
-     * @memberOf Subclass.ModuleAPI.prototype
-     */
-    ModuleAPI.prototype.registerParameters = function()
-    {
-        return this.getModule().getSettingsManager().setParameters.apply(
-            this.getModule().getSettingsManager(),
-            arguments
-        );
-    };
-
-    /**
-     * The same as the {@link Subclass.Parameter.ParameterManager#setParameter}
-     *
-     * @method setParameter
-     * @memberOf Subclass.ModuleAPI.prototype
-     */
-    ModuleAPI.prototype.setParameter = function()
-    {
-        return this.getModule().getParameterManager().setParameter.apply(
-            this.getModule().getParameterManager(),
-            arguments
-        );
-    };
-
-    /**
-     * The same as the {@link Subclass.Parameter.ParameterManager#getParameter}
-     *
-     * @method getParameter
-     * @memberOf Subclass.ModuleAPI.prototype
-     */
-    ModuleAPI.prototype.getParameter = function()
-    {
-        return this.getModule().getParameterManager().getParameter.apply(
-            this.getModule().getParameterManager(),
-            arguments
-        );
-    };
-
-    /**
-     * The same as the {@link Subclass.Parameter.ParameterManager#issetParameter}
-     *
-     * @method issetParameter
-     * @memberOf Subclass.ModuleAPI.prototype
-     */
-    ModuleAPI.prototype.issetParameter = function()
-    {
-        return this.getModule().getParameterManager().issetParameter.apply(
-            this.getModule().getParameterManager(),
-            arguments
-        );
+        return this.getModule().onInstance.apply(this.getModule(), arguments);
     };
 
 

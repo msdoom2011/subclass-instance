@@ -1,5 +1,5 @@
 {
-  "name": "subclass-parameter",
+  "name": "subclass-instance",
   "src_dir": "src",
   "release_dir": "release",
   "lib": {
@@ -7,10 +7,7 @@
       "src": "<%= config.src_dir %>",
       "release": "<%= config.release_dir %>"
     },
-    "files": [
-      "ParameterManager.js",
-      "**/*.js"
-    ],
+    "files": "**/*.js",
     "files_release": {
       "normal": "<%= config.lib.dir.release %>/<%= config.name %>.js",
       "minimized": "<%= config.lib.dir.release %>/<%= config.name %>.min.js"
