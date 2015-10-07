@@ -48,11 +48,6 @@ module.exports = function(grunt) {
                 dest: "<%= config.release_dir %>/src/",
                 cwd: "<%= config.lib.dir.src %>/",
                 expand: true
-            },
-            release_readme: {
-                src: "README.md",
-                dest: "<%= config.release_dir %>/",
-                expand: true
             }
         },
 
@@ -87,7 +82,7 @@ module.exports = function(grunt) {
             release: {
                 files: [{
                     src: [
-                        "vendors/subclass.js",
+                        "vendors/subclass-framework/release/subclass.js",
                         "release/subclass-instance.min.js",
                         "tests/plugs/app-first-plugin.js",
                         "tests/plugs/app-forth-plugin.js",
@@ -111,7 +106,6 @@ module.exports = function(grunt) {
 
     grunt.registerTask("release", [
         "clean:release",
-        "copy:release_readme",
         "concat:release",
         "uglify:release",
         "karma:release"

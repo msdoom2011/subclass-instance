@@ -17,7 +17,7 @@ module.exports = function(config) {
     files: [
 
       // Src Files
-      "vendors/subclass.js",
+      "vendors/subclass-framework/release/subclass.js",
       "src/ModuleInstance.js",
       "src/**/*.js",
 

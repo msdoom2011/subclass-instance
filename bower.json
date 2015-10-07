@@ -37,6 +37,6 @@
     "LICENSE"
   ],
   "dependencies": {
-    "subclass-framework": "0.1.*"
+    "subclass-framework": ""
   }
 }

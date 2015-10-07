@@ -1,8 +1,8 @@
 {
   "name": "SubclassInstance",
   "version": "0.1.0",
-  "homepage": "https://github.com/msdoom2011/subclassjs",
-  "repository": "git@github.com:msdoom2011/subclassjs.git",
+  "homepage": "https://github.com/msdoom2011/subclass-instance",
+  "repository": "git@github.com:msdoom2011/subclass-instance.git",
   "description": "The plugin for SubclassJS framework which brings ability to define parameters that will be available all over your SubclassJS application.",
   "author": {
     "name": "Dmitriy Osipishin",
