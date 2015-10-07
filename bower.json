@@ -1,11 +1,42 @@
 {
-  "name": "SubclassInstance",
+  "name": "subclass-instance",
   "version": "0.1.0",
   "authors": [
-    "Dmitriy Osipishin | <msdoom2011@gmail.com>"
+    "Dmitry Osipishin | <msdoom2011@gmail.com>"
   ],
   "description": "The plugin for Subclass framework which allows to create module instances",
-  "main": "Gruntfile.js",
+  "main": "release/subclass-instance.js",
+  "moduleType": "globals",
   "license": "MIT",
-  "private": true
+  "keywords": [
+    "subclass",
+    "framework",
+    "instance",
+    "js",
+    "class",
+    "inheritance",
+    "abstract class",
+    "mixin",
+    "trait",
+    "structure",
+    "autoloading",
+    "patterns",
+    "OOP"
+  ],
+  "ignore": [
+    "doc",
+    "node_modules",
+    "src",
+    "tests",
+    "**/.*",
+    "Gruntfile.config.json",
+    "Gruntfile.js",
+    "karma.config.js",
+    "package.json",
+    "TODO.md",
+    "LICENSE"
+  ],
+  "dependencies": {
+    "subclass-framework": "0.1.*"
+  }
 }
